@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MovieHub – Home</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div id="header"></div>
+
+    <section class="hero-section">
+        <div class="hero-text">
+            <h2 id="hero-main-text">Track Your Favorite Movies Easily</h2>
+            <p id="hero-sub-text">
+                Browse, search, and manage your personal movie collection.
+                Discover trending movies, add your own, and never forget a favorite.
+            </p>
+        </div>
+    </section>
+
+    <aside class="search-and-filter">
+        <label for="movie-search">
+            Search
+            <input
+                type="text"
+                id="movie-search"
+                placeholder="Search and enjoy..."
+            >
+        </label>
+
+        <div class="filter-drop-down">
+
+            <label for="genre">
+                Genre
+                <select id="genre">
+                    <option value="">All</option>
+                    <option value="comedy">Comedy</option>
+                    <option value="romance">Romance</option>
+                    <option value="action">Action</option>
+                    <option value="anime">Anime</option>
+                </select>
+            </label>
+
+            <label for="year">
+                Year Range
+                <input type="range" id="year" min="1995" max="2025">
+            </label>
+
+            <label for="rating">
+                Rating
+                <input type="range" id="rating" min="0" max="10">
+            </label>
+
+        </div>
+    </aside>
+
+    <main class="main-container">
+
+        <div class="list-title">
+            <h3>
+                Dive into the world of cinema — your next favorite movie is just a click away!
+            </h3>
+        </div>
+
+        <section class="movie-list">
+        </section>
+
+        <section class="movie-detail-card hidden">
+        </section>
+
+    </main>
+
+    <div id="footer"></div>
+
+    <script src="js/include.js" type="module"></script>
+    <script src="js/home.js" type="module"></script>
+
+</body>
+</html>
