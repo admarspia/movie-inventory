@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Movie – Personalization</title>
+</head>
+<body>
+    <header id="header"></header>
+
+<form id="personalize-movie-form">
+    <div id="header"> </div>
+
+
+    <fieldset>
+        <legend>Personalize Your Movie</legend>
+
+        <label for="status">
+            Watch Status
+            <select name="status" id="status" required>
+                <option value="planned">Planned</option>
+                <option value="watching">Watching</option>
+                <option value="watched">Watched</option>
+                <option value="dropped">Dropped</option>
+            </select>
+        </label>
+
+        <label for="notes">
+            Notes
+            <textarea
+                id="notes"
+                name="notes"
+                placeholder="Your thoughts about this movie..."
+                rows="4"
+            ></textarea>
+        </label>
+
+        <label for="personalRating">
+            Personal Rating
+            <input
+                type="range"
+                name="personalRating"
+                id="personalRating"
+                min="0"
+                max="10"
+                step="0.5"
+                value="5"
+            >
+        </label>
+        <small>0 (worst) -to- 10 (best)</small>
+
+        <fieldset>
+            <legend>Favorite</legend>
+
+            <label>
+                <input type="radio" name="favorite" value="true" checked>
+                Yes
+            </label>
+
+            <label>
+                <input type="radio" name="favorite" value="false">
+                No
+            </label>
+        </fieldset>
+
+        <label for="poster">
+            Custom Poster (optional)
+            <input
+                type="file"
+                name="poster"
+                id="poster"
+                accept="image/png, image/jpeg"
+            >
+        </label>
+
+    </fieldset>
+
+</form>
+
+    <div id="footer"></div>
+      <script src="../js/include.js" type="module"></script>
+    <script src="../js/personalize.js" type="module"></script>
+
+
+</body>
+</html>
