@@ -9,7 +9,24 @@
 </head>
 <body>
 
-    <div id="header"></div>
+    <header id="header">
+        <div class="header-container" style="display: flex; justify-content: space-between; align-items: center; padding: 15px 30px;">
+            <div class="brand-logo">
+                <h1 style="color: var(--primary-color); margin: 0; text-transform: uppercase;">MovieHub</h1>
+            </div>
+            
+            <ul class="nav-items" style="display: flex; gap: 20px; list-style: none; align-items: center;">
+                <li class="nav-item"><a href="#">Home</a></li>
+                <li class="nav-item"><a href="#content-section">Browse</a></li> <li class="nav-item"><a href="#">My List</a></li>
+                
+                <li class="nav-item">
+                    <button id="theme-btn" style="background:transparent; border:1px solid var(--text-main); color:var(--text-main); padding: 5px 15px; border-radius: 20px; cursor: pointer; transition: 0.3s;">
+                        ☀ Day Mode
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </header>
 
     <section class="hero-section">
         <div class="hero-text">
@@ -18,65 +35,63 @@
                 Browse, search, and manage your personal movie collection.
                 Discover trending movies, add your own, and never forget a favorite.
             </p>
+            <a href="#content-section" class="scroll-down-btn">Start Browsing ▼</a>
         </div>
     </section>
 
-    <aside class="search-and-filter">
-        <label for="movie-search">
-            Search
-            <input
-                type="text"
-                id="movie-search"
-                placeholder="Search and enjoy..."
-            >
-        </label>
-
-        <div class="filter-drop-down">
-
-            <label for="genre">
-                Genre
-                <select id="genre">
-                    <option value="">All</option>
-                    <option value="comedy">Comedy</option>
-                    <option value="romance">Romance</option>
-                    <option value="action">Action</option>
-                    <option value="anime">Anime</option>
-                </select>
+    <div id="content-section">
+        
+        <aside class="search-and-filter">
+            <label for="movie-search">
+                Search
+                <input type="text" id="movie-search" placeholder="Search and enjoy...">
             </label>
 
-            <label for="year">
-                Year Range
-                <input type="range" id="year" min="1995" max="2025">
-            </label>
+            <div class="filter-drop-down">
+                <label for="genre">
+                    Genre
+                    <select id="genre">
+                        <option value="">All</option>
+                        <option value="comedy">Comedy</option>
+                        <option value="romance">Romance</option>
+                        <option value="action">Action</option>
+                        <option value="anime">Anime</option>
+                    </select>
+                </label>
 
-            <label for="rating">
-                Rating
-                <input type="range" id="rating" min="0" max="10">
-            </label>
+                <label for="year">
+                    Year Range
+                    <input type="range" id="year" min="1995" max="2025">
+                </label>
 
-        </div>
-    </aside>
+                <label for="rating">
+                    Rating
+                    <input type="range" id="rating" min="0" max="10">
+                </label>
+            </div>
+        </aside>
 
-    <main class="main-container">
+        <main class="main-container">
+            <div class="list-title">
+                <h3>Dive into the world of cinema — your next favorite movie is just a click away!</h3>
+            </div>
 
-        <div class="list-title">
-            <h3>
-                Dive into the world of cinema — your next favorite movie is just a click away!
-            </h3>
-        </div>
+            <section class="movie-list">
+                </section>
 
-        <section class="movie-list">
-        </section>
+            <section class="movie-detail-card hidden">
+            </section>
+        </main>
+        
+    </div>
 
-        <section class="movie-detail-card hidden">
-        </section>
-
-    </main>
-
-    <div id="footer"></div>
+    <footer id="footer" style="padding: 20px; text-align: center; color: var(--text-muted);">
+        <p>&copy; 2025 MovieHub. All rights reserved.</p>
+    </footer>
 
     <script src="js/include.js" type="module"></script>
     <script src="js/home.js" type="module"></script>
+    <script src="js/theme.js"></script>
 
 </body>
 </html>
