@@ -6,7 +6,9 @@ import Movie from "./movies.js";
 
 function addMovieCard(movie) {
   const container = document.getElementById("movie-list");
-  if (!container || !movie) return;
+  if (!container || !movie) {
+    console.log("can't find movie-list");
+  };
 
   const movieCard = document.createElement("div");
   movieCard.classList.add("movie-card");
@@ -36,7 +38,9 @@ async function initHomePage() {
     "Gladiator",
     "Jurassic Park",
     "Pulp Fiction",
-    "The Matrix"
+    "The Matrix",
+    "Back to the Future",
+    "Fight Club"
   ];
 
   const movieLoader = new Movie();
