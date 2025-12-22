@@ -1,0 +1,14 @@
+<!-- Auth buttons -->
+<div id="auth-section">
+  <input type="email" id="email" placeholder="Email">
+  <input type="password" id="password" placeholder="Password">
+
+  <button onclick="signUp(email.value, password.value)">Sign Up</button>
+  <button onclick="signIn(email.value, password.value)">Sign In</button>
+</div>
+
+<!-- User info + Logout -->
+<div id="user-section" style="display:none;">
+  <span>Welcome, <strong id="user-email"></strong></span>
+  <button onclick="logout()">Logout</button>
+</div>
