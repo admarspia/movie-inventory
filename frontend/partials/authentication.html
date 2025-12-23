@@ -1,14 +1,27 @@
-<!-- Auth buttons -->
-<div id="auth-section">
-  <input type="email" id="email" placeholder="Email">
-  <input type="password" id="password" placeholder="Password">
+<div class="auth-wrapper">
+    <button class="close-modal-btn" style="position:absolute; top:15px; right:20px; background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;">&times;</button>
+    
+    <div id="login-section">
+        <h2 style="color:white; margin-bottom:20px;">Login</h2>
+        <form id="loginForm">
+            <input type="text" id="loginUsername" placeholder="Username" required>
+            <input type="password" id="loginPassword" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+        <p style="color:#ccc; margin-top:15px;">
+            Don't have an account? <a href="#" id="showSignup" style="color:white;">Sign up</a>
+        </p>
+    </div>
 
-  <button onclick="signUp(email.value, password.value)">Sign Up</button>
-  <button onclick="signIn(email.value, password.value)">Sign In</button>
-</div>
-
-<!-- User info + Logout -->
-<div id="user-section" style="display:none;">
-  <span>Welcome, <strong id="user-email"></strong></span>
-  <button onclick="logout()">Logout</button>
+    <div id="signup-section" style="display: none;">
+        <h2 style="color:white; margin-bottom:20px;">Sign Up</h2>
+        <form id="signupForm">
+            <input type="text" id="signupUsername" placeholder="Choose Username" required>
+            <input type="password" id="signupPassword" placeholder="Choose Password" required>
+            <button type="submit">Sign Up</button>
+        </form>
+        <p style="color:#ccc; margin-top:15px;">
+            Already have an account? <a href="#" id="showLogin" style="color:white;">Login</a>
+        </p>
+    </div>
 </div>

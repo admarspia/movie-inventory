@@ -1,6 +1,9 @@
 import { loadHTML } from "./include.js";
 import Movie from "./movies.js";
 
+// ⬇️ ADD THIS IMPORT ⬇️
+import { initAuth } from "./authentication.js";
+ 
 function addMovieCard(movie, containerId = "movie-list") {
     const container = document.getElementById(containerId);
     if (!container || !movie) {
@@ -25,20 +28,27 @@ async function initHomePage() {
     await loadHTML("header", "partials/header.html");
     await loadHTML("footer", "partials/footer.html");
 
-    const selectedMovies = [
-        "The Shawshank Redemption", 
-        "The Godfather",
-        "The Dark Knight",
-        "Inception",
-        "Forrest Gump",
-        "Interstellar",
-        "Gladiator",
-        "Jurassic Park",
-        "Pulp Fiction",
-        "The Matrix",
-        "Back to the Future",
-        "Fight Club"
-    ];
+  // 2. ⬇️ LOAD THE LOGIN POPUP (Critical for Auth) ⬇️
+  await loadHTML("auth-modal", "partials/authentication.html");
+
+  // 3. ⬇️ START THE AUTH LOGIC (Makes the button work) ⬇️
+  initAuth();
+
+  const selectedMovies = [
+    "The Shawshank Redemption", 
+    "The Godfather",
+    "The Dark Knight",
+    "Inception",
+    "Forrest Gump",
+    "Interstellar",
+    "Gladiator",
+    "Jurassic Park",
+    "Pulp Fiction",
+    "The Matrix",
+    "Back to the Future",
+    "Fight Club"
+  ];
+  
 
     const movieLoader = new Movie();
 

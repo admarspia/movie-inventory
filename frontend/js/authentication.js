@@ -1,82 +1,116 @@
+// frontend/js/authentication.js
 
+const USERS_KEY = 'movie_users';
+const CURRENT_USER_KEY = 'movie_current_user';
+
+// --- Helper Functions ---
 function getUsers() {
-  return JSON.parse(localStorage.getItem("users")) || [];
+    return JSON.parse(localStorage.getItem(USERS_KEY)) || [];
 }
 
-function saveUsers(users) {
-  localStorage.setItem("users", JSON.stringify(users));
+export function getCurrentUser() {
+    return JSON.parse(localStorage.getItem(CURRENT_USER_KEY));
 }
 
-function getLoggedInUser() {
-  return JSON.parse(localStorage.getItem("loggedInUser"));
+export function logout() {
+    localStorage.removeItem(CURRENT_USER_KEY);
+    window.location.reload();
 }
 
-// ---------- SIGN UP ----------
-function signUp(email, password) {
-  if (!email || !password) {
-    alert("Email and password are required");
-    return;
-  }
+// --- Main Init Function ---
+export function initAuth() {
+    console.log("Initializing Auth UI...");
 
-  const users = getUsers();
-  const exists = users.some(user => user.email === email);
+    // 1. Get Elements
+    const modal = document.getElementById('auth-modal');
+    const openBtn = document.getElementById('openAuthBtn');     
+    const closeBtn = document.querySelector('.close-modal-btn');
+    const userDisplay = document.getElementById('userDisplay'); 
+    const welcomeMsg = document.getElementById('welcomeMsg');
+    const logoutBtn = document.getElementById('logoutBtn');
 
-  if (exists) {
-    alert("User already exists. Please sign in.");
-    return;
-  }
+    // 2. Check Login Status
+    const user = getCurrentUser();
+    if (user) {
+        // User is Logged In
+        if(openBtn) openBtn.style.display = 'none';           
+        if(userDisplay) {
+            userDisplay.style.display = 'flex';               
+            welcomeMsg.textContent = `Hi, ${user.username}`;
+        }
+    } else {
+        // User is Logged Out
+        if(openBtn) openBtn.style.display = 'block';          
+        if(userDisplay) userDisplay.style.display = 'none';   
+    }
 
-  users.push({ email, password });
-  saveUsers(users);
+    // 3. Event Listeners
+    if(openBtn) {
+        openBtn.addEventListener('click', () => {
+            if(modal) modal.style.display = 'flex';
+        });
+    }
 
-  alert("Sign up successful! Please sign in.");
+    if(closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            if(modal) modal.style.display = 'none';
+        });
+    }
+    
+    window.addEventListener('click', (e) => {
+        if (e.target === modal) modal.style.display = 'none';
+    });
+
+    if(logoutBtn) logoutBtn.addEventListener('click', logout);
+
+    // 4. Setup Forms
+    setupFormLogic();
 }
 
-// ---------- SIGN IN ----------
-function signIn(email, password) {
-  const users = getUsers();
+function setupFormLogic() {
+    // Switch between Login and Signup
+    document.getElementById('showSignup')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('login-section').style.display = 'none';
+        document.getElementById('signup-section').style.display = 'block';
+    });
 
-  const user = users.find(
-    u => u.email === email && u.password === password
-  );
+    document.getElementById('showLogin')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('signup-section').style.display = 'none';
+        document.getElementById('login-section').style.display = 'block';
+    });
 
-  if (!user) {
-    alert("Invalid email or password");
-    return;
-  }
+    // Handle Login Submit
+    document.getElementById('loginForm')?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const username = document.getElementById('loginUsername').value;
+        const password = document.getElementById('loginPassword').value;
+        const users = getUsers();
+        
+        if (users.find(u => u.username === username && u.password === password)) {
+            localStorage.setItem(CURRENT_USER_KEY, JSON.stringify({ username }));
+            window.location.reload(); 
+        } else {
+            alert('Invalid credentials');
+        }
+    });
 
-  localStorage.setItem("loggedInUser", JSON.stringify(user));
-  updateAuthUI();
+    // Handle Register Submit
+    document.getElementById('signupForm')?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const username = document.getElementById('signupUsername').value;
+        const password = document.getElementById('signupPassword').value;
+        const users = getUsers();
+        
+        if(users.find(u => u.username === username)) {
+            alert('User already exists');
+            return;
+        }
 
-  alert("Login successful!");
+        users.push({ username, password });
+        localStorage.setItem(USERS_KEY, JSON.stringify(users));
+        alert('Registered! Please login.');
+        document.getElementById('showLogin').click();
+    });
 }
-
-// ---------- LOGOUT ----------
-function logout() {
-  localStorage.removeItem("loggedInUser");
-  updateAuthUI();
-  alert("Logged out successfully");
-}
-
-// ---------- UI HANDLER ----------
-function updateAuthUI() {
-  const user = getLoggedInUser();
-
-  const authSection = document.getElementById("auth-section");
-  const userSection = document.getElementById("user-section");
-  const userEmail = document.getElementById("user-email");
-
-  if (user) {
-    // User is logged in
-    authSection.style.display = "none";
-    userSection.style.display = "block";
-    userEmail.textContent = user.email;
-  } else {
-    // User is logged out
-    authSection.style.display = "block";
-    userSection.style.display = "none";
-  }
-}
-
-// Run on page load
-document.addEventListener("DOMContentLoaded", updateAuthUI);

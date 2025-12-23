@@ -1,5 +1,5 @@
 <header class="home-header">
-    <div class="header-container">
+    <div class="header-container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
 
         <div class="brand-logo">
             <h1 id="brand">MovieHub</h1>
@@ -7,11 +7,9 @@
         </div>
 
         <nav class="navbar">
-            <ul class="nav-items">
+            <ul class="nav-items" style="display: flex; gap: 15px; list-style: none; margin: 0; padding: 0; align-items: center;">
                 <li class="nav-item"><a href="#">Home</a></li>
-                
                 <li class="nav-item"><a href="#content-section">Browse</a></li>
-                
                 <li class="nav-item"><a href="includes/favorites.html">Favorites</a></li>
                 <li class="nav-item"><a href="includes/personalized.html">Personalized</a></li>
                 
@@ -22,6 +20,17 @@
                 </li>
             </ul>
         </nav>
+
+        <div class="header-right" style="margin-left: 20px;">
+            <button id="openAuthBtn" class="netflix-btn" style="background-color: #e50914; color: white; padding: 7px 15px; border: none; border-radius: 4px; cursor: pointer;">
+                Sign In
+            </button>
+            
+            <div id="userDisplay" style="display: none; align-items: center;">
+                <span id="welcomeMsg" style="margin-right: 10px; font-weight: bold;"></span>
+                <button id="logoutBtn" style="padding: 5px 10px; cursor: pointer;">Logout</button>
+            </div>
+        </div>
 
     </div>
 </header>
