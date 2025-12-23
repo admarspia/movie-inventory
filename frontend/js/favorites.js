@@ -1,5 +1,14 @@
 import { loadHTML } from "./include.js";
+// ==============================
+// Protect Favorite Page
+// ==============================
 
+const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+
+if (!loggedInUser) {
+  alert("Please sign in to access Favorites.");
+  window.location.href = "authentication.html";
+}
 async function initFavoritesPage() {
     loadHTML("header", "partials/header.html");
     loadHTML("footer", "partials/footer.html");
