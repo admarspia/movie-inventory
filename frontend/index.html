@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MovieHub – Home</title>
-
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
     <header id="header"></header>
+    
 
     <section class="hero-section">
         <div class="hero-text">
@@ -23,11 +23,10 @@
     </section>
 
     <div id="content-section">
-        
         <aside class="search-and-filter">
-            <label for="movie-search">
+            <label for="search-input">
                 Search
-                <input type="text" id="movie-search" placeholder="Search and enjoy...">
+                <input type="text" id="search-input" placeholder="Search and enjoy...">
             </label>
 
             <div class="filter-drop-down">
@@ -43,13 +42,18 @@
                 </label>
 
                 <label for="year">
-                    Year Range
-                    <input type="range" id="year" min="1995" max="2025">
+                    Year: <span id="year-value">1995</span>
+                    <input type="range" id="year" min="1995" max="2025" value="1995">
                 </label>
 
                 <label for="rating">
-                    Rating
-                    <input type="range" id="rating" min="0" max="10">
+                    Rating: <span id="rating-value">0</span>/10
+                    <input type="range" id="rating" min="0" max="10" value="0">
+                </label>
+                
+                <label for="filter-enable">
+                    Enable filter
+                    <input type="checkbox" id="filter-enable" name="filter-enable">
                 </label>
             </div>
         </aside>
@@ -60,10 +64,13 @@
             </div>
             
             <section class="movie-list" id="movie-list">
-                <section class="movie-detail-card " style="display: none;">  </section>
+                <div class="movie-detail-card" style="display: none;"></div>
+            </section>
+            
+            <section class="search-results" id="search-results">
+                <!-- Search results will appear here -->
             </section>
         </main>
-        
     </div>
     <div id="auth-modal"></div>
 

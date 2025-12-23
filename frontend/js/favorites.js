@@ -1,8 +1,8 @@
 import { loadHTML } from "./include.js";
 
 async function initFavoritesPage() {
-    await loadHTML("header", "/partials/header.html");
-    await loadHTML("footer", "/partials/footer.html");
+    loadHTML("header", "partials/header.html");
+    loadHTML("footer", "partials/footer.html");
     
 
     const favorites = JSON.parse(localStorage.getItem('moviehub_favorites') || '[]');

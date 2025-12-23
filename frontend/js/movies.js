@@ -50,19 +50,14 @@ export default class Movie {
         return this; 
     }
 
-    filterByYear(year) {
+    filterByYear(minYear) {
         const source = this.filtered.length ? this.filtered : this.result;
 
         this.filtered = source.filter(m => {
             if (!m.Year) return false;
             const parts = m.Year.split("-");
-            if (parts.length === 1) {
-                return Number(parts[0]) === Number(year);
-            } else {
-                const start = Number(parts[0]);
-                const end = Number(parts[1]);
-                return year >= start && year <= end;
-            }
+            const startYear = Number(parts[0]);
+            return !isNaN(startYear) && startYear >= minYear;
         });
 
         return this;
