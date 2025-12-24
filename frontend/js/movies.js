@@ -1,6 +1,5 @@
-const API_KEY = "3f16a76f"
-const BASE_URL = "http://www.omdbapi.com/"
-
+const API_KEY = "3f16a76f";
+const BASE_URL = "https://www.omdbapi.com/";
 
 export default class Movie {
     constructor() {
@@ -13,51 +12,80 @@ export default class Movie {
         this.imdbRating = "";
         this.Writer = "";
         this.Awards = "";
-        this.result = [];      
-        this.filtered = [];   
+
+        this.result = [];
+        this.filtered = [];
+
+        this.isFavorite = false;
+        this.customNotes = "";
+        this.customRating = null;
+        this.customPoster = null;
+        this.watchStatus = "planned";
     }
 
     async getMovieDetails(id) {
-        const res = await fetch(`${BASE_URL}?apikey=${API_KEY}&i=${id}`);
-        const data = await res.json();
+        try {
+            const res = await fetch(
+                `${BASE_URL}?apikey=${API_KEY}&i=${encodeURIComponent(id)}`
+            );
+            const data = await res.json();
 
-        if (data.Response === "False") {
-            console.log(data.Error);
+            if (data.Response === "False") {
+                console.error(data.Error);
+                return null;
+            }
+
+            return data;
+        } catch (err) {
+            console.error("Failed to fetch movie details:", err);
             return null;
         }
-
-        return data;
     }
 
     async searchByTitle(title) {
-        const res = await fetch(`${BASE_URL}?apikey=${API_KEY}&s=${encodeURIComponent(title)}`);
-        const data = await res.json();
+        try {
+            const res = await fetch(
+                `${BASE_URL}?apikey=${API_KEY}&s=${encodeURIComponent(title)}`
+            );
+            const data = await res.json();
 
-        if (data.Response === "False") {
-            console.log(data.Error);
             this.result = [];
-            return this; 
+            this.filtered = [];
+
+            if (data.Response === "False") {
+                console.error(data.Error);
+                return this;
+            }
+
+            for (const movie of data.Search) {
+                const movieDetail = await this.getMovieDetails(movie.imdbID);
+                if (movieDetail) {
+                    this.result.push(movieDetail);
+                }
+            }
+
+            return this;
+        } catch (err) {
+            console.error("Search failed:", err);
+            return this;
         }
+    }
 
-        this.result = [];
-
-        for (const movie of data.Search) {
-            const movieDetail = await this.getMovieDetails(movie.imdbID);
-            if (movieDetail) this.result.push(movieDetail);
-        }
-
-        this.filtered = [];
-        return this; 
+    getById(id) {
+        const source = this.filtered.length ? this.filtered : this.result;
+        return source.find(movie => movie.imdbID === id) || null;
     }
 
     filterByYear(minYear) {
         const source = this.filtered.length ? this.filtered : this.result;
 
-        this.filtered = source.filter(m => {
-            if (!m.Year) return false;
-            const parts = m.Year.split("-");
+        this.filtered = source.filter(movie => {
+            if (!movie.Year) return false;
+
+            const parts = movie.Year.split("-");
             const startYear = Number(parts[0]);
-            return !isNaN(startYear) && startYear >= minYear;
+
+            return !Number.isNaN(startYear) && startYear >= minYear;
         });
 
         return this;
@@ -66,9 +94,9 @@ export default class Movie {
     filterByGenre(genre) {
         const source = this.filtered.length ? this.filtered : this.result;
 
-        this.filtered = source.filter(m => {
-            if (!m.Genre) return false;
-            return m.Genre.split(", ").includes(genre);
+        this.filtered = source.filter(movie => {
+            if (!movie.Genre) return false;
+            return movie.Genre.split(", ").includes(genre);
         });
 
         return this;
@@ -77,9 +105,9 @@ export default class Movie {
     filterByRating(rating) {
         const source = this.filtered.length ? this.filtered : this.result;
 
-        this.filtered = source.filter(m => {
-            if (!m.imdbRating || m.imdbRating === "N/A") return false;
-            return Number(m.imdbRating) >= rating;
+        this.filtered = source.filter(movie => {
+            if (!movie.imdbRating || movie.imdbRating === "N/A") return false;
+            return Number(movie.imdbRating) >= rating;
         });
 
         return this;
