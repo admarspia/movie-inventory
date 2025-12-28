@@ -398,43 +398,99 @@ input[type=range] { width: 100%; accent-color: var(--primary-color); }
 }
 
 
-
 /* =========================================
-   AUTHENTICATION MODAL STYLES
+   1. ACCESS DENIED MODAL (The Popup)
    ========================================= */
-
-/* 1. The Dark Overlay (Background) */
-#auth-modal {
-    position: fixed; /* Stays in place when scrolling */
+.auth-overlay {
+    position: fixed; 
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.85); /* Dark see-through background */
-    display: none;       /* Centers the box */
+    background-color: rgba(0, 0, 0, 0.9); /* Dark background */
+    display: none;       
     justify-content: center;
     align-items: center;
-    z-index: 10000;      /* Sits on top of everything */
-    backdrop-filter: blur(5px); /* Blurs the background movie list */
-    
-    /* Initially hidden? Remove this line if you want to see it immediately for testing */
-    /* display: none; */ 
+    z-index: 10000;      
+    backdrop-filter: blur(5px);
 }
 
-/* 2. The Login Card (White Box) */
+.auth-box {
+    background: #1f1f1f;
+    padding: 2.5rem;
+    border-radius: 12px;
+    text-align: center;
+    width: 90%;
+    max-width: 420px;
+    border: 1px solid #333;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.7);
+    animation: slideUp 0.4s ease-out;
+}
+
+.auth-box h2 {
+    color: #fff;
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+}
+
+.auth-box p {
+    color: #b3b3b3;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.btn-login {
+    background: #e50914;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    flex: 1;
+}
+
+.btn-cancel {
+    background: transparent;
+    color: #fff;
+    border: 1px solid #555;
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    flex: 1;
+}
+
+.btn-login:hover { background: #f40612; }
+.btn-cancel:hover { border-color: #fff; background: rgba(255,255,255,0.1); }
+
+@keyframes slideUp {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* =========================================
+   2. AUTHENTICATION PAGE (Login/Signup Card)
+   ========================================= */
 .auth-wrapper {
-    background-color: #1a1a1a; /* Dark grey card */
+    background-color: #1a1a1a; 
     padding: 40px;
     border-radius: 10px;
     width: 100%;
-    max-width: 400px; /* Not too wide */
+    max-width: 400px; 
     box-shadow: 0 15px 30px rgba(0,0,0,0.5);
     border: 1px solid #333;
     text-align: center;
     position: relative;
+    margin: 50px auto; /* Centered on page */
 }
 
-/* 3. Titles (Login / Sign Up) */
 .auth-wrapper h3 {
     margin-bottom: 25px;
     color: #fff;
@@ -442,7 +498,6 @@ input[type=range] { width: 100%; accent-color: var(--primary-color); }
     font-weight: bold;
 }
 
-/* 4. Input Fields */
 .auth-wrapper input {
     width: 100%;
     padding: 12px 15px;
@@ -452,20 +507,19 @@ input[type=range] { width: 100%; accent-color: var(--primary-color); }
     border-radius: 5px;
     color: white;
     font-size: 1rem;
-    box-sizing: border-box; /* Ensures padding doesn't break width */
+    box-sizing: border-box;
 }
 
 .auth-wrapper input:focus {
     outline: none;
-    border-color: #e50914; /* Red accent color on click */
+    border-color: #e50914; 
     background-color: #444;
 }
 
-/* 5. The Buttons (Login / Register) */
 .auth-wrapper button {
     width: 100%;
     padding: 12px;
-    background-color: #e50914; /* Netflix Red */
+    background-color: #e50914; 
     color: white;
     border: none;
     border-radius: 5px;
@@ -477,10 +531,9 @@ input[type=range] { width: 100%; accent-color: var(--primary-color); }
 }
 
 .auth-wrapper button:hover {
-    background-color: #b20710; /* Darker red on hover */
+    background-color: #b20710; 
 }
 
-/* 6. The Toggle Links (Switch between login/signup) */
 .auth-wrapper p {
     margin-top: 20px;
     color: #aaa;
@@ -498,3 +551,397 @@ input[type=range] { width: 100%; accent-color: var(--primary-color); }
     text-decoration: underline;
 }
 
+/* =========================================
+   3. VARIABLES & RESET
+   ========================================= */
+:root {
+    --primary-color: #e50914; 
+    --bg-dark: #141414;
+    --bg-sidebar: #1a1a1a;
+    --text-white: #ffffff;
+    --text-muted: #b3b3b3;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-white);
+    font-family: 'Segoe UI', sans-serif;
+    display: block; 
+}
+
+/* =========================================
+   4. FAVORITES LAYOUT
+   ========================================= */
+.favorites-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr; 
+    min-height: 100vh;
+    border-top: 1px solid #333;
+}
+
+.search-and-filter {
+    background-color: var(--bg-sidebar);
+    border-right: 1px solid #333;
+    padding: 25px;
+    position: sticky;
+    top: 0; 
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.search-and-filter label {
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.search-and-filter input[type="text"],
+.search-and-filter select {
+    width: 100%;
+    padding: 12px;
+    background-color: #000;
+    border: 1px solid #333;
+    border-radius: 4px;
+    color: white;
+    font-size: 1rem;
+}
+
+.search-and-filter input[type="text"]:focus,
+.search-and-filter select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.search-and-filter input[type="range"] {
+    width: 100%;
+    accent-color: var(--primary-color);
+    cursor: pointer;
+}
+
+.checkbox-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #333;
+    margin-top: 20px;
+    padding-top: 20px;
+}
+
+.checkbox-wrapper label { margin: 0; }
+.checkbox-wrapper input { accent-color: var(--primary-color); transform: scale(1.3); }
+
+/* =========================================
+   5. MAIN CONTENT & CARDS
+   ========================================= */
+.main-container {
+    padding: 40px;
+    background-color: var(--bg-dark);
+}
+
+.list-title h3 {
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+    border-left: 4px solid var(--primary-color);
+    padding-left: 15px;
+}
+
+.favorite-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 25px;
+}
+
+.movie-card {
+    background-color: #1f1f1f;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    border: 1px solid transparent;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.movie-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary-color);
+}
+
+.movie-card img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    display: block;
+}
+
+.movie-card-info {
+    padding: 15px;
+}
+
+.movie-card h4 {
+    color: white;
+    font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* =========================================
+   6. PERSONALIZE FORM
+   ========================================= */
+#personalize-movie-form {
+    background-color: #1f1f1f;
+    max-width: 600px;
+    width: 90%;
+    margin: 40px auto; 
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+    border: 1px solid #333;
+}
+
+fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+legend {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #e50914; 
+    margin-bottom: 25px;
+    width: 100%;
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #b3b3b3;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+small {
+    display: block;
+    color: #666;
+    font-size: 0.8rem;
+    margin-top: -15px; 
+    margin-bottom: 25px;
+}
+
+select, 
+textarea {
+    width: 100%;
+    background-color: #000;
+    color: #fff;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 12px;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    font-family: inherit;
+    transition: border-color 0.3s ease;
+}
+
+select:focus, 
+textarea:focus {
+    outline: none;
+    border-color: #e50914;
+}
+
+input[type="range"] {
+    width: 100%;
+    margin: 10px 0 20px 0;
+    accent-color: #e50914;
+    cursor: pointer;
+}
+
+fieldset fieldset {
+    background-color: #262626;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    border: 1px solid #333;
+}
+
+fieldset fieldset legend {
+    font-size: 1.1rem;
+    border: none;
+    color: #fff;
+    margin-bottom: 10px;
+    padding: 0;
+}
+
+fieldset fieldset label {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 20px;
+    color: white;
+    cursor: pointer;
+    margin-bottom: 0;
+}
+
+input[type="radio"] {
+    transform: scale(1.2);
+    margin-right: 8px;
+    accent-color: #e50914;
+}
+
+input[type="file"] {
+    background: #000;
+    padding: 10px;
+    border: 1px dashed #444;
+    border-radius: 6px;
+    width: 100%;
+    color: #888;
+    cursor: pointer;
+}
+
+input[type="file"]::-webkit-file-upload-button {
+    background: #333;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    margin-right: 15px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+input[type="file"]::-webkit-file-upload-button:hover {
+    background: #444;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 15px;
+    background-color: #e50914;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.2s;
+}
+
+.btn-submit:hover {
+    background-color: #f40612;
+}
+
+/* =========================================
+   7. PERSONALIZED PAGE LAYOUT
+   ========================================= */
+.personal-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr; 
+    min-height: 80vh;
+    border-top: 1px solid #333;
+}
+
+.personalized-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 30px;
+    padding-bottom: 50px;
+}
+
+.personal-card {
+    background-color: #1f1f1f;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #333;
+}
+
+.personal-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    border-color: #e50914;
+}
+
+.personal-card img {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    opacity: 0.9;
+}
+
+.personal-info {
+    padding: 15px;
+}
+
+.personal-info h4 {
+    color: #fff;
+    font-size: 1rem;
+    margin-bottom: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.personal-info p {
+    color: #b3b3b3;
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+}
+
+.status-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+    z-index: 2;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+
+.status-watched { background-color: #2ecc71; } 
+.status-watching { background-color: #3498db; } 
+.status-planned { background-color: #f1c40f; color: #000; } 
+.status-dropped { background-color: #e74c3c; } 
+
+.user-rating {
+    color: #f1c40f; 
+    font-weight: bold;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* =========================================
+   8. MOBILE RESPONSIVENESS
+   ========================================= */
+@media (max-width: 768px) {
+    .favorites-layout,
+    .personal-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .search-and-filter {
+        position: relative;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid #333;
+    }
+
+    .favorite-list {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+}
+
+.hidden { display: none !important; }

@@ -5,25 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MovieHub – Personalized</title>
     <base href="../">
-
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
     <div id="header"></div>
 
-    <aside class="search-and-filter">
-
-        <label for="personal-search">
-            Search Your Movies
-            <input
-                type="text"
-                id="personal-search"
-                placeholder="Search your collection..."
-            >
-        </label>
-
-        <div class="filter-drop-down">
+    <div class="personal-layout">
 
             <label for="status-filter">
                 Watch Status
@@ -36,31 +24,40 @@
                 </select>
             </label>
 
-            <label for="rating-filter">
-                Minimum Rating
-                <input type="range" id="rating-filter" min="0" max="10" step="0.5">
-            </label>
+            <div class="filter-drop-down">
+                <label for="status-filter">
+                    Watch Status
+                    <select id="status-filter">
+                        <option value="">All</option>
+                        <option value="planned">Planned</option>
+                        <option value="watching">Watching</option>
+                        <option value="watched">Watched</option>
+                        <option value="dropped">Dropped</option>
+                    </select>
+                </label>
 
-        </div>
-    </aside>
+                <label for="rating-filter">
+                    Minimum Rating: <span id="rating-display">0</span>
+                    <input type="range" id="rating-filter" min="0" max="10" step="0.5" value="0" 
+                           oninput="document.getElementById('rating-display').innerText = this.value">
+                </label>
+            </div>
+        </aside>
 
-    <main class="main-container">
+        <main class="main-container">
+            <div class="list-title">
+                <h3>Movies shaped by your taste, your ratings, and your journey.</h3>
+            </div>
 
-        <div class="list-title">
-            <h3>
-                Movies shaped by your taste, your ratings, and your journey.
-            </h3>
-        </div>
+            <section class="personalized-list">
+                </section>
 
-        <section class="personalized-list">
-        </section>
+            <section class="movie-detail-card hidden">
+            </section>
+        </main>
 
-        <section class="movie-detail-card hidden">
-        </section>
-
-    </main>
-
-    <div id="footer"> </div>
+    </div>
+    <div id="footer"></div>
 
     <script src="js/include.js" type="module"></script>
     <script src="js/personalized.js" type="module"></script>

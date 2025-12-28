@@ -12,11 +12,12 @@
 
     <div id="header"></div>
 
+    <div class="favorites-layout">
 
-    <aside class="search-and-filter">
+        <aside class="search-and-filter">
             <label for="search-input">
                 Search
-                <input type="text" id="search-input" placeholder="Search and enjoy...">
+                <input type="text" id="search-input" placeholder="Search saved movies...">
             </label>
 
             <div class="filter-drop-down">
@@ -40,27 +41,27 @@
                     Rating
                     <input type="range" id="rating" min="0" max="10">
                 </label>
-                <label for="filter-enable"> Enable filter
+                
+                <div class="checkbox-wrapper">
+                    <label for="filter-enable">Enable filter</label>
                     <input type="checkbox" id="filter-enable" name="filter-enable">
-                </label>
+                </div>
             </div>
-    </aside>
-    <main class="main-container">
+        </aside>
 
-        <div class="list-title">
-            <h3>
-                Your favorite movies — saved, remembered, and ready to watch again.
-            </h3>
-        </div>
+        <main class="main-container">
+            <div class="list-title">
+                <h3>Your Favorites Collection</h3>
+            </div>
 
-        <section class="favorite-list">
-        </section>
+            <section class="favorite-list">
+                </section>
 
-        <section class="movie-detail-card hidden">
-        </section>
+            <section class="movie-detail-card hidden">
+            </section>
+        </main>
 
-    </main>
-
+    </div> 
     <div id="footer"></div>
 
     <script src="js/theme.js"></script>
@@ -70,5 +71,3 @@
     <script src="js/favorite.js"></script>
 </body>
 </html>
-
-

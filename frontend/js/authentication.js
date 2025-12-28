@@ -1,9 +1,8 @@
-// frontend/js/authentication.js
+
 
 const USERS_KEY = 'movie_users';
 const CURRENT_USER_KEY = 'movie_current_user';
 
-// --- Helper Functions ---
 function getUsers() {
     return JSON.parse(localStorage.getItem(USERS_KEY)) || [];
 }
@@ -17,11 +16,10 @@ export function logout() {
     window.location.reload();
 }
 
-// --- Main Init Function ---
 export function initAuth() {
     console.log("Initializing Auth UI...");
 
-    // 1. Get Elements
+
     const modal = document.getElementById('auth-modal');
     const openBtn = document.getElementById('openAuthBtn');     
     const closeBtn = document.querySelector('.close-modal-btn');
@@ -29,22 +27,18 @@ export function initAuth() {
     const welcomeMsg = document.getElementById('welcomeMsg');
     const logoutBtn = document.getElementById('logoutBtn');
 
-    // 2. Check Login Status
     const user = getCurrentUser();
     if (user) {
-        // User is Logged In
         if(openBtn) openBtn.style.display = 'none';           
         if(userDisplay) {
             userDisplay.style.display = 'flex';               
             welcomeMsg.textContent = `Hi, ${user.username}`;
         }
     } else {
-        // User is Logged Out
         if(openBtn) openBtn.style.display = 'block';          
         if(userDisplay) userDisplay.style.display = 'none';   
     }
 
-    // 3. Event Listeners
     if(openBtn) {
         openBtn.addEventListener('click', () => {
             if(modal) modal.style.display = 'flex';
@@ -63,12 +57,10 @@ export function initAuth() {
 
     if(logoutBtn) logoutBtn.addEventListener('click', logout);
 
-    // 4. Setup Forms
     setupFormLogic();
 }
 
 function setupFormLogic() {
-    // Switch between Login and Signup
     document.getElementById('showSignup')?.addEventListener('click', (e) => {
         e.preventDefault();
         document.getElementById('login-section').style.display = 'none';
@@ -81,7 +73,6 @@ function setupFormLogic() {
         document.getElementById('login-section').style.display = 'block';
     });
 
-    // Handle Login Submit
     document.getElementById('loginForm')?.addEventListener('submit', (e) => {
         e.preventDefault();
         const username = document.getElementById('loginUsername').value;
@@ -96,7 +87,6 @@ function setupFormLogic() {
         }
     });
 
-    // Handle Register Submit
     document.getElementById('signupForm')?.addEventListener('submit', (e) => {
         e.preventDefault();
         const username = document.getElementById('signupUsername').value;
