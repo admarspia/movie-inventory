@@ -986,6 +986,9 @@ textarea:focus,
 .status-planned { background-color: #f1c40f; color: #000; } 
 .status-dropped { background-color: #e74c3c; } 
 
+
+
+
 /* =========================================
    NOTIFICATIONS
    ========================================= */
@@ -1371,5 +1374,226 @@ body.light-mode .no-favorites {
 }
 
 body.light-mode .no-favorites h3 {
+    color: #141414;
+}
+
+
+/* =========================================
+   PERSONALIZED PAGE LAYOUT
+   ========================================= */
+
+/* Personalized movies grid container */
+.personalized-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+    padding: 2rem;
+    margin: 20px 0;
+    background: linear-gradient(135deg, 
+        rgba(20, 20, 20, 0.9) 0%, 
+        rgba(30, 30, 30, 0.95) 100%);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+    min-height: 400px;
+}
+
+.personalized-list::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, 
+        transparent, 
+        var(--primary-color), 
+        transparent);
+}
+
+/* Empty state */
+.no-personalized {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 40px;
+    color: var(--text-muted);
+}
+
+.no-personalized h3 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: var(--text-main);
+}
+
+.no-personalized p {
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.no-personalized .btn-primary {
+    display: inline-block;
+    padding: 12px 30px;
+    background: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.no-personalized .btn-primary:hover {
+    background: #b20710;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(229, 9, 20, 0.3);
+}
+
+/* Personalized movie cards (using .movie-card from your JS) */
+.personalized-list .movie-card {
+    background: linear-gradient(145deg, #1a1a1a, #222222);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 2px solid rgba(229, 9, 20, 0.3);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    position: relative;
+    padding-bottom: 1rem;
+}
+
+.personalized-list .movie-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    border-color: rgba(229, 9, 20, 0.6);
+    box-shadow: 
+        0 20px 40px rgba(229, 9, 20, 0.2),
+        0 0 0 1px rgba(229, 9, 20, 0.1);
+}
+
+/* Card image in personalized */
+.personalized-list .movie-card img {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    transition: transform 0.8s ease;
+}
+
+.personalized-list .movie-card:hover img {
+    transform: scale(1.1);
+}
+
+/* Card content in personalized */
+.personalized-list .movie-card h4 {
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 1rem 1rem 0.5rem;
+    line-height: 1.3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.personalized-list .movie-card p {
+    color: #aaa;
+    font-size: 0.9rem;
+    margin: 0.3rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Status indicator in personalized cards */
+.personalized-list .movie-card p:nth-of-type(3) {
+    color: #ffcc00;
+    font-weight: 600;
+}
+
+/* Status badges for personalized cards */
+.personalized-list .movie-card::before {
+    content: '★';
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(229, 9, 20, 0.9);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    z-index: 2;
+    box-shadow: 0 4px 12px rgba(229, 9, 20, 0.3);
+}
+
+/* Remove button styling for personalized */
+.personalized-list .remove-personalized {
+    padding: 12px 20px;
+    margin: 1rem 1rem 0;
+    width: calc(100% - 2rem);
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.personalized-list .remove-personalized:hover {
+    background: linear-gradient(135deg, #c0392b, #a93226);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(231, 76, 60, 0.3);
+}
+
+.personalized-list .remove-personalized:active {
+    transform: translateY(0);
+    box-shadow: 0 5px 10px rgba(231, 76, 60, 0.2);
+}
+
+/* Add icon before remove button text */
+.personalized-list .remove-personalized::before {
+    content: '×';
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+/* Light mode adjustments */
+body.light-mode .personalized-list {
+    background: linear-gradient(135deg, 
+        rgba(240, 240, 240, 0.9) 0%, 
+        rgba(255, 255, 255, 0.95) 100%);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode .personalized-list .movie-card {
+    background: linear-gradient(145deg, #f0f0f0, #ffffff);
+    border: 2px solid rgba(229, 9, 20, 0.2);
+}
+
+body.light-mode .personalized-list .movie-card h4 {
+    color: #141414;
+}
+
+body.light-mode .personalized-list .movie-card p {
+    color: #666;
+}
+
+body.light-mode .no-personalized {
+    color: #666;
+}
+
+body.light-mode .no-personalized h3 {
     color: #141414;
 }
