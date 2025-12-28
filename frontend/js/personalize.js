@@ -3,33 +3,32 @@ import Movie from "./movies.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     const statusEl = document.getElementById("status");
-    const noteEl = document.getElementById("note");
+    const noteEl = document.getElementById("notes");
     const ratingEl = document.getElementById("personalRating");
     const posterEl = document.getElementById("poster");
-    const saveBtn = document.getElementById("savePersonalization");
+    const saveBtn = document.getElementById("btn-submit");
 
     if (!saveBtn) return;
 
-    saveBtn.addEventListener("click", () => {
+    saveBtn.addEventListener("click", (e) => {
+        e.preventDefault(); 
         savePersonalization(statusEl, noteEl, ratingEl, posterEl);
     });
 });
 
 function savePersonalization(statusEl, noteEl, ratingEl, posterEl) {
     const rawMovie = localStorage.getItem("personalizing");
-
     if (!rawMovie) {
         console.error("No movie to personalize");
+        alert("No movie selected to personalize.");
         return;
     }
 
     const movie = JSON.parse(rawMovie);
 
-    // ===== Get favorite radio value =====
     const favoriteRadio = document.querySelector('input[name="favorite"]:checked');
     const isFavorite = favoriteRadio ? favoriteRadio.value === "true" : false;
 
-    // ===== Apply personalization =====
     movie.watchStatus = statusEl.value;
     movie.customNotes = noteEl.value;
     movie.isFavorite = isFavorite;
@@ -41,32 +40,28 @@ function savePersonalization(statusEl, noteEl, ratingEl, posterEl) {
         const reader = new FileReader();
         reader.onload = () => {
             movie.customPoster = reader.result;
-            storeMovie(movie);
+            storeMovie(movie, isFavorite);
         };
         reader.readAsDataURL(file);
     } else {
-        storeMovie(movie);
-    }
-
-    // ===== Optionally add to favorites =====
-    if (isFavorite) {
-        const storedFab = localStorage.getItem("moviehub_favorites");
-        const favoriteMovies = storedFab ? JSON.parse(storedFab) : [];
-        favoriteMovies.push(movie); // store as object, not string
-        localStorage.setItem("moviehub_favorites", JSON.stringify(favoriteMovies));
+        storeMovie(movie, isFavorite);
     }
 }
 
-// ===== Store personalized movie =====
-function storeMovie(movie) {
+function storeMovie(movie, isFavorite) {
     const stored = localStorage.getItem("personalized");
     const personalized = stored ? JSON.parse(stored) : [];
-
     personalized.push(movie);
-
     localStorage.setItem("personalized", JSON.stringify(personalized));
     localStorage.removeItem("personalizing");
 
-    console.log("Movie personalized successfully");
+    if (isFavorite) {
+        const storedFav = localStorage.getItem("moviehub_favorites");
+        const favoriteMovies = storedFav ? JSON.parse(storedFav) : [];
+        favoriteMovies.push(movie);
+        localStorage.setItem("moviehub_favorites", JSON.stringify(favoriteMovies));
+    }
+
     alert("Movie saved successfully!");
+    console.log("Movie personalized successfully");
 }
