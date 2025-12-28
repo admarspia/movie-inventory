@@ -1,5 +1,7 @@
 import { loadHTML } from "./include.js";
 import { initAuth } from "./authentication.js";
+import ensureLogin from './ensureLogin.js';
+
 import Movie from "./movies.js";
 
 const movieLoader = new Movie();
@@ -40,7 +42,12 @@ function addMovieCard(movie, containerId = "movie-list") {
         .addEventListener("click", () => showCardDetails(movie));
 
     movieCard.querySelector(".add-favorite-btn")
-        .addEventListener("click", () => addToFav(movie));
+        .addEventListener("click", () => {      
+            let res = ensureLogin();
+            return;
+
+            }
+    );
     
 }
 
@@ -131,6 +138,7 @@ function showCardDetails(movie) {
 
     document.getElementById('personalize-link')
         .addEventListener("click", ()=> {
+            let res = ensureLogin();
             const personalizing = JSON.stringify(movie);
         
             localStorage.setItem("personalizing",personalizing);
@@ -142,7 +150,11 @@ function showCardDetails(movie) {
         .addEventListener("click", () => container.style.display = "none");
 
     document.getElementById("add-favorite-btn")
-        .addEventListener("click", () => addToFav(movie.imdbID));
+        .addEventListener("click", () =>  { 
+            ensureLogin();
+            return;
+            addToFav(movie.imdbID);
+        });
 
     document.getElementById("watch-trailer-btn")
         .addEventListener("click", () => {
