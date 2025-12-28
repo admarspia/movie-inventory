@@ -1,40 +1,72 @@
 import { loadHTML } from "./include.js";
 import Movie from "./movies.js";
 
-async function initHomePage() {
-    await loadHTML("header", "partials/header.html");
-    await loadHTML("footer", "partials/footer.html");
-}
+document.addEventListener("DOMContentLoaded", () => {
+    const statusEl = document.getElementById("status");
+    const noteEl = document.getElementById("note");
+    const ratingEl = document.getElementById("personalRating");
+    const posterEl = document.getElementById("poster");
+    const saveBtn = document.getElementById("savePersonalization");
 
+    if (!saveBtn) return;
 
+    saveBtn.addEventListener("click", () => {
+        savePersonalization(statusEl, noteEl, ratingEl, posterEl);
+    });
+});
 
-function personalize(){
-    const status = document.getElementById("status");
-    const note = document.getElementById("note");
-    const presonalRating = document.getElementById("personalRating");
-    const favorite = document.getElementById("favorite");
-    const poster = document.getElementById("postor");
+function savePersonalization(statusEl, noteEl, ratingEl, posterEl) {
+    const rawMovie = localStorage.getItem("personalizing");
 
-
-
-
-    const personalizing = localStorage.getItem("personalizing");
-    if (!personalizing || personalizing.length === 0)
-        console.log("Personalizing not found");
-
-    const movie = personalize;
-
-    let personalized = localStorage.getItem("personalized");
-    if (!personalized || personalized.length === 0){
-        localStorage.setItem("personalized", []);
+    if (!rawMovie) {
+        console.error("No movie to personalize");
+        return;
     }
 
-    personalized = localStorage.getItem("personalized");
+    const movie = JSON.parse(rawMovie);
 
+    // ===== Get favorite radio value =====
+    const favoriteRadio = document.querySelector('input[name="favorite"]:checked');
+    const isFavorite = favoriteRadio ? favoriteRadio.value === "true" : false;
 
-    
+    // ===== Apply personalization =====
+    movie.watchStatus = statusEl.value;
+    movie.customNotes = noteEl.value;
+    movie.isFavorite = isFavorite;
+    movie.customRating = ratingEl.value ? Number(ratingEl.value) : null;
 
+    const file = posterEl.files[0];
 
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+            movie.customPoster = reader.result;
+            storeMovie(movie);
+        };
+        reader.readAsDataURL(file);
+    } else {
+        storeMovie(movie);
+    }
+
+    // ===== Optionally add to favorites =====
+    if (isFavorite) {
+        const storedFab = localStorage.getItem("moviehub_favorites");
+        const favoriteMovies = storedFab ? JSON.parse(storedFab) : [];
+        favoriteMovies.push(movie); // store as object, not string
+        localStorage.setItem("moviehub_favorites", JSON.stringify(favoriteMovies));
+    }
 }
 
-initHomePage();
+// ===== Store personalized movie =====
+function storeMovie(movie) {
+    const stored = localStorage.getItem("personalized");
+    const personalized = stored ? JSON.parse(stored) : [];
+
+    personalized.push(movie);
+
+    localStorage.setItem("personalized", JSON.stringify(personalized));
+    localStorage.removeItem("personalizing");
+
+    console.log("Movie personalized successfully");
+    alert("Movie saved successfully!");
+}

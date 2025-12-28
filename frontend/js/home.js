@@ -40,15 +40,13 @@ function addMovieCard(movie, containerId = "movie-list") {
         .addEventListener("click", () => showCardDetails(movie));
 
     movieCard.querySelector(".add-favorite-btn")
-        .addEventListener("click", () => addToFav(movie.imdbID));
+        .addEventListener("click", () => addToFav(movie));
     
 }
 
 
-
-function addToFav(id) {
-    const movie = movieLoader.getById(id);
-    if (!movie) return;
+function addToFav(movie) {
+    if (!movie) console.log("movie not found");
 
     movie.isFavorite = true;
 
@@ -62,13 +60,6 @@ function addToFav(id) {
         alert(`${movie.Title} is already in favorites.`);
     }
 }
-
-
-
-
-
-
-
 
 function showCardDetails(movie) {
     const container = document.querySelector(".movie-detail-card");
@@ -132,11 +123,18 @@ function showCardDetails(movie) {
                 <button id="add-favorite-btn">Add to Favorites</button>
                 <button id="watch-trailer-btn">Watch Trailer</button>
                 <button id="close-detail-btn">Close</button>
-                <a href="includes/personalize.html" id="personalize-btn">Personalize</a>
+                <a href="includes/personalize.html" id="personalize-link">Personalize</a>
             </div>
 
         </div>
     `;
+
+    document.getElementById('personalize-link')
+        .addEventListener("click", ()=> {
+            const personalizing = JSON.stringify(movie);
+        
+            localStorage.setItem("personalizing",personalizing);
+        })
 
     container.style.display = "flex";
 

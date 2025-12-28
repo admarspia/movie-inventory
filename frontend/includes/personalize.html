@@ -6,8 +6,49 @@
     <title>Add Movie – Personalization</title>
     <link rel="stylesheet" href="../css/style.css"> </head>
 <body>
-    
-    <div id="header"></div>
+    <header id="header"></header>
+
+<form id="personalize-movie-form">
+    <div id="header"> </div>
+
+
+    <fieldset>
+        <legend>Personalize Your Movie</legend>
+
+        <label for="status">
+            Watch Status
+            <select name="status" id="status" required>
+                <option value="planned" selected>Planned</option>
+                <option value="watching">Watching</option>
+                <option value="watched">Watched</option>
+                <option value="dropped">Dropped</option>
+            </select>
+        </label>
+
+        <label for="note">
+            Notes
+            <textarea
+                id="note"
+                name="notes"
+                placeholder="Your thoughts about this movie..."
+                rows="4"
+                maxlength="1024"
+            ></textarea>
+        </label>
+
+        <label for="personalRating">
+            Personal Rating
+            <input
+                type="range"
+                name="personalRating"
+                id="personalRating"
+                min="0"
+                max="10"
+                step="0.5"
+                value="5"
+            >
+        </label>
+        <small>0 (worst) -to- 10 (best)</small>
 
     <form id="personalize-movie-form">
         <fieldset>
@@ -49,10 +90,13 @@
                 <input type="file" name="poster" id="poster" accept="image/png, image/jpeg">
             </label>
 
-            <button type="submit" class="btn-submit">Save Changes</button>
+
+    </fieldset>
 
         </fieldset>
     </form>
+
+    <button id="savePersonalization"> Save </button>
 
     <div id="footer"></div>
 
