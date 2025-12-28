@@ -1,0 +1,1414 @@
+./frontend/partials/authentication.html
+<div class="auth-wrapper">
+    <button class="close-modal-btn" style="position:absolute; top:15px; right:20px; background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;">&times;</button>
+    
+    <div id="login-section">
+        <h2 style="color:white; margin-bottom:20px;">Login</h2>
+        <form id="loginForm">
+            <input type="text" id="loginUsername" placeholder="Username" required>
+            <input type="password" id="loginPassword" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+        <p style="color:#ccc; margin-top:15px;">
+            Don't have an account? <a href="#" id="showSignup" style="color:white;">Sign up</a>
+        </p>
+    </div>
+
+    <div id="signup-section" style="display: none;">
+        <h2 style="color:white; margin-bottom:20px;">Sign Up</h2>
+        <form id="signupForm">
+            <input type="text" id="signupUsername" placeholder="Choose Username" required>
+            <input type="password" id="signupPassword" placeholder="Choose Password" required>
+            <button type="submit">Sign Up</button>
+        </form>
+        <p style="color:#ccc; margin-top:15px;">
+            Already have an account? <a href="#" id="showLogin" style="color:white;">Login</a>
+        </p>
+    </div>
+</div>./frontend/partials/header.html
+<header class="home-header">
+    <div class="header-container" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+
+        <div class="brand-logo">
+            <h1 id="brand">MovieHub</h1>
+            <p id="brand-tagline">Discover. Track. Enjoy.</p>
+        </div>
+
+        <nav class="navbar">
+            <ul class="nav-items" style="display: flex; gap: 15px; list-style: none; margin: 0; padding: 0; align-items: center;">
+                <li class="nav-item"><a href="index.html">Home</a></li>
+                <li class="nav-item"><a href="#content-section">Browse</a></li>
+                <li class="nav-item"><a href="includes/favorites.html">Favorites</a></li>
+                <li class="nav-item"><a href="includes/personalized.html">Personalized</a></li>
+                
+                <li class="nav-item">
+                    <button id="theme-btn" style="background:transparent; border:1px solid var(--text-main); color:var(--text-main); padding: 5px 15px; border-radius: 20px; cursor: pointer; transition: 0.3s;">
+                        ☀ Day Mode
+                    </button>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="header-right" style="margin-left: 20px;">
+            <button id="openAuthBtn" class="netflix-btn" style="background-color: #e50914; color: white; padding: 7px 15px; border: none; border-radius: 4px; cursor: pointer;">
+                Sign In
+            </button>
+            
+            <div id="userDisplay" style="display: none; align-items: center;">
+                <span id="welcomeMsg" style="margin-right: 10px; font-weight: bold;"></span>
+                <button id="logoutBtn" style="padding: 5px 10px; cursor: pointer;">Logout</button>
+            </div>
+        </div>
+
+    </div>
+</header>./frontend/partials/footer.html
+<footer class="footer">
+    <div class="footer-container">
+
+        <div class="footer-brand">
+            <p>MovieHub</p>
+            <p>© 2025 MovieHub. All rights reserved.</p>
+        </div>
+
+        <div class="footer-links">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Genres</th>
+                        <th>Explore</th>
+                        <th>More</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Action</td>
+                        <td>Popular</td>
+                        <td>About</td>
+                    </tr>
+                    <tr>
+                        <td>Comedy</td>
+                        <td>Top Rated</td>
+                        <td>Contact</td>
+                    </tr>
+                    <tr>
+                        <td>Drama</td>
+                        <td>New</td>
+                        <td>Help</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</footer>
+./frontend/includes/personalized.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MovieHub – Personalized</title>
+    <base href="../">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div id="header"></div>
+
+    <aside class="search-and-filter">
+
+        <label for="personal-search">
+            Search Your Movies
+            <input
+                type="text"
+                id="personal-search"
+                placeholder="Search your collection..."
+            >
+        </label>
+
+        <div class="filter-drop-down">
+
+            <label for="status-filter">
+                Watch Status
+                <select id="status-filter">
+                    <option value="">All</option>
+                    <option value="planned">Planned</option>
+                    <option value="watching">Watching</option>
+                    <option value="watched">Watched</option>
+                    <option value="dropped">Dropped</option>
+                </select>
+            </label>
+
+            <label for="rating-filter">
+                Minimum Rating
+                <input type="range" id="rating-filter" min="0" max="10" step="0.5">
+            </label>
+
+        </div>
+    </aside>
+
+    <main class="main-container">
+
+        <div class="list-title">
+            <h3>
+                Movies shaped by your taste, your ratings, and your journey.
+            </h3>
+        </div>
+
+        <section class="personalized-list">
+        </section>
+
+        <section class="movie-detail-card hidden">
+        </section>
+
+    </main>
+
+    <div id="footer"> </div>
+
+    <script src="js/include.js" type="module"></script>
+    <script src="js/personalized.js" type="module"></script>
+
+</body>
+</html>
+./frontend/includes/favorites.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MovieHub – Favorites</title>
+
+    <base href="../">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div id="header"></div>
+
+
+    <aside class="search-and-filter">
+            <label for="search-input">
+                Search
+                <input type="text" id="search-input" placeholder="Search and enjoy...">
+            </label>
+
+            <div class="filter-drop-down">
+                <label for="genre">
+                    Genre
+                    <select id="genre">
+                        <option value="">All</option>
+                        <option value="comedy">Comedy</option>
+                        <option value="romance">Romance</option>
+                        <option value="action">Action</option>
+                        <option value="anime">Anime</option>
+                    </select>
+                </label>
+
+                <label for="year">
+                    Year Range
+                    <input type="range" id="year" min="1995" max="2025">
+                </label>
+
+                <label for="rating">
+                    Rating
+                    <input type="range" id="rating" min="0" max="10">
+                </label>
+                <label for="filter-enable"> Enable filter
+                    <input type="checkbox" id="filter-enable" name="filter-enable">
+                </label>
+            </div>
+    </aside>
+    <main class="main-container">
+
+        <div class="list-title">
+            <h3>
+                Your favorite movies — saved, remembered, and ready to watch again.
+            </h3>
+        </div>
+
+        <section class="favorite-list">
+        </section>
+
+        <section class="movie-detail-card hidden">
+        </section>
+
+    </main>
+
+    <div id="footer"></div>
+
+    <script src="js/theme.js"></script>
+    <script src="js/movies.js" type="module"></script>
+    <script src="js/include.js" type="module"></script>
+    <script src="js/favorites.js" type="module"></script>
+
+</body>
+</html>
+
+
+./frontend/includes/personalize.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Movie – Personalization</title>
+</head>
+<body>
+    <header id="header"></header>
+
+<form id="personalize-movie-form">
+    <div id="header"> </div>
+
+
+    <fieldset>
+        <legend>Personalize Your Movie</legend>
+
+        <label for="status">
+            Watch Status
+            <select name="status" id="status" required>
+                <option value="planned">Planned</option>
+                <option value="watching">Watching</option>
+                <option value="watched">Watched</option>
+                <option value="dropped">Dropped</option>
+            </select>
+        </label>
+
+        <label for="notes">
+            Notes
+            <textarea
+                id="notes"
+                name="notes"
+                placeholder="Your thoughts about this movie..."
+                rows="4"
+            ></textarea>
+        </label>
+
+        <label for="personalRating">
+            Personal Rating
+            <input
+                type="range"
+                name="personalRating"
+                id="personalRating"
+                min="0"
+                max="10"
+                step="0.5"
+                value="5"
+            >
+        </label>
+        <small>0 (worst) -to- 10 (best)</small>
+
+        <fieldset>
+            <legend>Favorite</legend>
+
+            <label>
+                <input type="radio" name="favorite" value="true" checked>
+                Yes
+            </label>
+
+            <label>
+                <input type="radio" name="favorite" value="false">
+                No
+            </label>
+        </fieldset>
+
+        <label for="poster">
+            Custom Poster (optional)
+            <input
+                type="file"
+                name="poster"
+                id="poster"
+                accept="image/png, image/jpeg"
+            >
+        </label>
+
+    </fieldset>
+
+</form>
+
+    <div id="footer"></div>
+      <script src="../js/include.js" type="module"></script>
+    <script src="../js/personalize.js" type="module"></script>
+
+
+</body>
+</html>
+./frontend/includes/movieCard.html
+./frontend/index.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MovieHub – Home</title>
+    <base href="./">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header id="header"></header>
+    
+
+    <section class="hero-section">
+        <div class="hero-text">
+            <h2 id="hero-main-text">Track Your Favorite Movies Easily</h2>
+            <p id="hero-sub-text">
+                Browse, search, and manage your personal movie collection.
+                Discover trending movies, add your own, and never forget a favorite.
+            </p>
+            <a href="#content-section" class="scroll-down-btn">Start Browsing ▼</a>
+        </div>
+    </section>
+
+    <div id="content-section">
+        <aside class="search-and-filter">
+            <label for="search-input">
+                Search
+                <input type="text" id="search-input" placeholder="Search and enjoy...">
+            </label>
+
+            <div class="filter-drop-down">
+                <label for="genre">
+                    Genre
+                    <select id="genre">
+                        <option value="">All</option>
+                        <option value="comedy">Comedy</option>
+                        <option value="romance">Romance</option>
+                        <option value="action">Action</option>
+                        <option value="drama">Drama</option>
+                    </select>
+                </label>
+
+                <label for="year">
+                    Year: <span id="year-value">1995</span>
+                    <input type="range" id="year" min="1995" max="2025" value="1995">
+                </label>
+
+                <label for="rating">
+                    Rating: <span id="rating-value">0</span>/10
+                    <input type="range" id="rating" min="0" max="10" value="0">
+                </label>
+                
+                <label for="filter-enable">
+                    Enable filter
+                    <input type="checkbox" id="filter-enable" name="filter-enable">
+                </label>
+            </div>
+        </aside>
+
+        <main class="main-container">
+            <div class="list-title">
+                <h3>Dive into the world of cinema — your next favorite movie is just a click away!</h3>
+            </div>
+            
+            <section class="movie-list" id="movie-list">
+                <div class="movie-detail-card" style="display: none;"></div>
+            </section>
+            
+            <section class="search-results" id="search-results">
+                <!-- Search results will appear here -->
+            </section>
+        </main>
+    </div>
+    <div id="auth-modal"></div>
+
+    <footer id="footer"></footer>
+
+    <script src="js/include.js" type="module"></script>
+    <script src="js/home.js" type="module"></script>
+    <script src="js/theme.js" type="module"></script>
+    <script src="js/movies.js" type="module"></script>
+    <script src="js/authentication.js" type="module"></script>
+
+</body>
+</html>./frontend/js/personalized.js
+import { loadHTML } from "./include.js";
+
+async function initHomePage() {
+    await loadHTML("header", "partials/header.html");
+    await loadHTML("footer", "partials/footer.html");
+}
+
+initHomePage();
+./frontend/js/favorites.js
+import { loadHTML } from "./include.js";
+
+async function initFavoritesPage() {
+    loadHTML("header", "partials/header.html");
+    loadHTML("footer", "partials/footer.html");
+    
+
+    const favorites = JSON.parse(localStorage.getItem('moviehub_favorites') || '[]');
+    const container = document.querySelector('.favorite-list');
+    
+    if (!container) return;
+    
+    if (favorites.length === 0) {
+        container.innerHTML = `
+            <div class="no-favorites">
+                <h3>No favorites yet</h3>
+                <p>Start adding movies from the Home page!</p>
+                <a href="../index.html" class="btn-primary">Browse Movies</a>
+            </div>
+        `;
+        return;
+    }
+    
+  
+    favorites.forEach(movie => {
+        const movieCard = document.createElement('div');
+        movieCard.className = 'movie-card';
+        movieCard.innerHTML = `
+            <img src="${movie.Poster}" alt="${movie.Title}">
+            <h4>${movie.Title}</h4>
+            <p>${movie.Year} • ${movie.Genre}</p>
+            <button class="remove-favorite" data-id="${movie.imdbID}">Remove</button>
+        `;
+        container.appendChild(movieCard);
+    });
+    
+ 
+    const searchInput = document.getElementById('favorite-search');
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const cards = container.querySelectorAll('.movie-card');
+            
+            cards.forEach(card => {
+                const title = card.querySelector('h4').textContent.toLowerCase();
+                card.style.display = title.includes(term) ? 'block' : 'none';
+            });
+        });
+    }
+}
+
+initFavoritesPage();
+./frontend/js/authentication.js
+// frontend/js/authentication.js
+
+const USERS_KEY = 'movie_users';
+const CURRENT_USER_KEY = 'movie_current_user';
+
+// --- Helper Functions ---
+function getUsers() {
+    return JSON.parse(localStorage.getItem(USERS_KEY)) || [];
+}
+
+export function getCurrentUser() {
+    return JSON.parse(localStorage.getItem(CURRENT_USER_KEY));
+}
+
+export function logout() {
+    localStorage.removeItem(CURRENT_USER_KEY);
+    window.location.reload();
+}
+
+// --- Main Init Function ---
+export function initAuth() {
+    console.log("Initializing Auth UI...");
+
+    // 1. Get Elements
+    const modal = document.getElementById('auth-modal');
+    const openBtn = document.getElementById('openAuthBtn');     
+    const closeBtn = document.querySelector('.close-modal-btn');
+    const userDisplay = document.getElementById('userDisplay'); 
+    const welcomeMsg = document.getElementById('welcomeMsg');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    // 2. Check Login Status
+    const user = getCurrentUser();
+    if (user) {
+        // User is Logged In
+        if(openBtn) openBtn.style.display = 'none';           
+        if(userDisplay) {
+            userDisplay.style.display = 'flex';               
+            welcomeMsg.textContent = `Hi, ${user.username}`;
+        }
+    } else {
+        // User is Logged Out
+        if(openBtn) openBtn.style.display = 'block';          
+        if(userDisplay) userDisplay.style.display = 'none';   
+    }
+
+    // 3. Event Listeners
+    if(openBtn) {
+        openBtn.addEventListener('click', () => {
+            if(modal) modal.style.display = 'flex';
+        });
+    }
+
+    if(closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            if(modal) modal.style.display = 'none';
+        });
+    }
+    
+    window.addEventListener('click', (e) => {
+        if (e.target === modal) modal.style.display = 'none';
+    });
+
+    if(logoutBtn) logoutBtn.addEventListener('click', logout);
+
+    // 4. Setup Forms
+    setupFormLogic();
+}
+
+function setupFormLogic() {
+    // Switch between Login and Signup
+    document.getElementById('showSignup')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('login-section').style.display = 'none';
+        document.getElementById('signup-section').style.display = 'block';
+    });
+
+    document.getElementById('showLogin')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('signup-section').style.display = 'none';
+        document.getElementById('login-section').style.display = 'block';
+    });
+
+    // Handle Login Submit
+    document.getElementById('loginForm')?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const username = document.getElementById('loginUsername').value;
+        const password = document.getElementById('loginPassword').value;
+        const users = getUsers();
+        
+        if (users.find(u => u.username === username && u.password === password)) {
+            localStorage.setItem(CURRENT_USER_KEY, JSON.stringify({ username }));
+            window.location.reload(); 
+        } else {
+            alert('Invalid credentials');
+        }
+    });
+
+    // Handle Register Submit
+    document.getElementById('signupForm')?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const username = document.getElementById('signupUsername').value;
+        const password = document.getElementById('signupPassword').value;
+        const users = getUsers();
+        
+        if(users.find(u => u.username === username)) {
+            alert('User already exists');
+            return;
+        }
+
+        users.push({ username, password });
+        localStorage.setItem(USERS_KEY, JSON.stringify(users));
+        alert('Registered! Please login.');
+        document.getElementById('showLogin').click();
+    });
+}./frontend/js/home.js
+import { loadHTML } from "./include.js";
+import { initAuth } from "./authentication.js";
+import Movie from "./movies.js";
+
+const movieLoader = new Movie();
+
+
+function addMovieCard(movie, containerId = "movie-list") {
+    const container = document.getElementById(containerId);
+    if (!container || !movie) {
+        console.log("Can't find container or movie");
+        return;
+    }
+
+    const movieCard = document.createElement("div");
+    movieCard.classList.add("movie-card");
+
+    movieCard.innerHTML = `
+        <div class="card-poster">
+            <img src="${movie.Poster !== "N/A" ? movie.Poster : "placeholder.jpg"}" alt="${movie.Title}" />
+        </div>
+
+        <div class="card-info">
+            <h4>${movie.Title}</h4>
+            <p>${movie.Year}</p>
+            <p>${movie.Genre}</p>
+        </div>
+
+        <div class="card-actions">
+            <button class="view-details-btn" data-id="${movie.imdbID}">View Details</button>
+            <button class="add-favorite-btn" data-id="${movie.imdbID}">Add to Favorites</button>
+        </div>
+    `;
+
+    container.appendChild(movieCard);
+
+    movieCard.querySelector(".view-details-btn")
+        .addEventListener("click", () => handleViewDetails(movie.imdbID));
+
+    movieCard.querySelector(".add-favorite-btn")
+        .addEventListener("click", () => addToFav(movie.imdbID));
+}
+
+function addToFav(id) {
+    const movie = movieLoader.getById(id);
+    if (!movie) return;
+
+    movie.isFavorite = true;
+
+    let favorites = JSON.parse(localStorage.getItem("moviehub_favorites") || "[]");
+
+    if (!favorites.find(fav => fav.imdbID === movie.imdbID)) {
+        favorites.push(movie);
+        localStorage.setItem("moviehub_favorites", JSON.stringify(favorites));
+        alert(`${movie.Title} added to favorites!`);
+    } else {
+        alert(`${movie.Title} is already in favorites.`);
+    }
+}
+
+
+function handleViewDetails(id) {
+    const movie = movieLoader.getById(id);
+    if (movie) showCardDetails(movie);
+}
+
+function showCardDetails(movie) {
+    const container = document.getElementById("movie-detail-card");
+    if (!container) return;
+
+    container.innerHTML = `
+        <div class="detail-card">
+
+            <div class="card-poster">
+                <img src="${movie.Poster !== "N/A" ? movie.Poster : "placeholder.jpg"}" alt="${movie.Title}" />
+            </div>
+
+            <div class="card-info">
+                <h4>${movie.Title}</h4>
+                <p>${movie.Year}</p>
+                <p>${movie.Genre}</p>
+                <p>IMDb Rating: ${movie.imdbRating}</p>
+                <p>Awards: ${movie.Awards}</p>
+                <p>Box Office: ${movie.BoxOffice}</p>
+                <p>Language: ${movie.Language}</p>
+                <p>Writer: ${movie.Writer}</p>
+            </div>
+
+            <div class="card-actions">
+                <button id="add-favorite-btn">Add to Favorites</button>
+                <button id="watch-trailer-btn">Watch Trailer</button>
+                <button id="close-detail-btn">Close</button>
+                <a href="includes/personalize.html" id="personalize-btn">Personalize</a>
+            </div>
+
+        </div>
+    `;
+
+    container.style.display = "block";
+
+    document.getElementById("close-detail-btn")
+        .addEventListener("click", () => container.style.display = "none");
+
+    document.getElementById("add-favorite-btn")
+        .addEventListener("click", () => addToFav(movie.imdbID));
+
+    document.getElementById("watch-trailer-btn")
+        .addEventListener("click", () => {
+            const query = encodeURIComponent(`${movie.Title} official trailer`);
+            window.open(`https://www.youtube.com/results?search_query=${query}`, "_blank");
+        });
+}
+
+
+async function initHomePage() {
+    await loadHTML("header", "partials/header.html");
+    await loadHTML("footer", "partials/footer.html");
+    await loadHTML("auth-modal", "partials/authentication.html");
+
+    initAuth();
+
+    const selectedMovies = [
+        "The Shawshank Redemption",
+        "The Godfather",
+        "The Dark Knight",
+        "Inception",
+        "Forrest Gump",
+        "Interstellar",
+        "Gladiator",
+        "Jurassic Park",
+        "Pulp Fiction",
+        "The Matrix",
+        "Back to the Future",
+        "Fight Club"
+    ];
+
+    for (const title of selectedMovies) {
+        await movieLoader.searchByTitle(title);
+        const movies = movieLoader.getMovies();
+        if (movies.length) addMovieCard(movies[0]);
+    }
+
+    setupFilters();
+}
+
+function setupFilters() {
+    updateSliderValue("year", "year-value");
+    updateSliderValue("rating", "rating-value");
+
+    document.getElementById("year")?.addEventListener("input", () =>
+        updateSliderValue("year", "year-value")
+    );
+
+    document.getElementById("rating")?.addEventListener("input", () =>
+        updateSliderValue("rating", "rating-value")
+    );
+
+    document.getElementById("search-input")
+        ?.addEventListener("keypress", e => {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                handleSearch();
+            }
+        });
+}
+
+function updateSliderValue(sliderId, displayId) {
+    const slider = document.getElementById(sliderId);
+    const display = document.getElementById(displayId);
+    if (slider && display) display.textContent = slider.value;
+}
+
+async function handleSearch() {
+    const query = document.getElementById("search-input").value.trim();
+    if (!query) return;
+
+    const searchResults = document.getElementById("search-results");
+    searchResults.innerHTML = "";
+
+    const loader = new Movie();
+    await loader.searchByTitle(query);
+
+    const filterEnabled = document.getElementById("filter-enable")?.checked;
+
+    if (filterEnabled) {
+        const genre = document.getElementById("genre").value;
+        const year = Number(document.getElementById("year").value);
+        const rating = Number(document.getElementById("rating").value);
+
+        if (genre) loader.filterByGenre(genre);
+        if (year) loader.filterByYear(year);
+        if (rating) loader.filterByRating(rating);
+    }
+
+    const movies = loader.getMovies();
+    if (!movies.length) {
+        searchResults.innerHTML = "<p>No movies found.</p>";
+        return;
+    }
+
+    movies.forEach(movie => addMovieCard(movie, "search-results"));
+}
+
+window.handleSearch = handleSearch;
+initHomePage();
+./frontend/js/movies.js
+const API_KEY = "3f16a76f";
+const BASE_URL = "https://www.omdbapi.com/";
+
+export default class Movie {
+    constructor() {
+        this.Title = "";
+        this.imdbID = "";
+        this.BoxOffice = "";
+        this.Genre = "";
+        this.Language = "";
+        this.Poster = "";
+        this.imdbRating = "";
+        this.Writer = "";
+        this.Awards = "";
+
+        this.result = [];
+        this.filtered = [];
+
+        this.isFavorite = false;
+        this.customNotes = "";
+        this.customRating = null;
+        this.customPoster = null;
+        this.watchStatus = "planned";
+    }
+
+    async getMovieDetails(id) {
+        try {
+            const res = await fetch(
+                `${BASE_URL}?apikey=${API_KEY}&i=${encodeURIComponent(id)}`
+            );
+            const data = await res.json();
+
+            if (data.Response === "False") {
+                console.error(data.Error);
+                return null;
+            }
+
+            return data;
+        } catch (err) {
+            console.error("Failed to fetch movie details:", err);
+            return null;
+        }
+    }
+
+    async searchByTitle(title) {
+        try {
+            const res = await fetch(
+                `${BASE_URL}?apikey=${API_KEY}&s=${encodeURIComponent(title)}`
+            );
+            const data = await res.json();
+
+            this.result = [];
+            this.filtered = [];
+
+            if (data.Response === "False") {
+                console.error(data.Error);
+                return this;
+            }
+
+            for (const movie of data.Search) {
+                const movieDetail = await this.getMovieDetails(movie.imdbID);
+                if (movieDetail) {
+                    this.result.push(movieDetail);
+                }
+            }
+
+            return this;
+        } catch (err) {
+            console.error("Search failed:", err);
+            return this;
+        }
+    }
+
+    getById(id) {
+        const source = this.filtered.length ? this.filtered : this.result;
+        return source.find(movie => movie.imdbID === id) || null;
+    }
+
+    filterByYear(minYear) {
+        const source = this.filtered.length ? this.filtered : this.result;
+
+        this.filtered = source.filter(movie => {
+            if (!movie.Year) return false;
+
+            const parts = movie.Year.split("-");
+            const startYear = Number(parts[0]);
+
+            return !Number.isNaN(startYear) && startYear >= minYear;
+        });
+
+        return this;
+    }
+
+    filterByGenre(genre) {
+        const source = this.filtered.length ? this.filtered : this.result;
+
+        this.filtered = source.filter(movie => {
+            if (!movie.Genre) return false;
+            return movie.Genre.split(", ").includes(genre);
+        });
+
+        return this;
+    }
+
+    filterByRating(rating) {
+        const source = this.filtered.length ? this.filtered : this.result;
+
+        this.filtered = source.filter(movie => {
+            if (!movie.imdbRating || movie.imdbRating === "N/A") return false;
+            return Number(movie.imdbRating) >= rating;
+        });
+
+        return this;
+    }
+
+    getMovies() {
+        return this.filtered.length ? this.filtered : this.result;
+    }
+}
+
+
+./frontend/js/personalize.js
+import { loadHTML } from "./include.js";
+
+async function initHomePage() {
+    await loadHTML("header", "partials/header.html");
+    await loadHTML("footer", "partials/footer.html");
+}
+
+initHomePage();
+./frontend/js/theme.js
+
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'light') {
+    document.body.classList.add('light-mode');
+}
+
+
+function updateButtonState() {
+    const btn = document.getElementById('theme-btn');
+    if (!btn) return;
+
+    const isLight = document.body.classList.contains('light-mode');
+
+    if (isLight) {
+        btn.innerHTML = "☾ Night Mode";
+        btn.style.backgroundColor = "#e50914"; 
+        btn.style.color = "#fff";
+        btn.style.border = "none";
+    } else {
+        btn.innerHTML = "☀ Day Mode";
+        btn.style.backgroundColor = "transparent";
+        btn.style.color = "var(--text-main)";
+        btn.style.border = "1px solid var(--text-main)";
+    }
+}
+
+
+document.addEventListener('click', (e) => {
+    if (e.target && e.target.id === 'theme-btn') {
+        const body = document.body;
+        
+    
+        body.classList.toggle('light-mode');
+        
+    
+        if (body.classList.contains('light-mode')) {
+            localStorage.setItem('theme', 'light');
+        } else {
+            localStorage.setItem('theme', 'dark');
+        }
+
+        updateButtonState();
+    }
+});
+
+
+const observer = new MutationObserver(() => {
+    const btn = document.getElementById('theme-btn');
+    if (btn) {
+        updateButtonState();
+        
+        observer.disconnect(); 
+    }
+});
+
+
+observer.observe(document.body, { childList: true, subtree: true });
+
+
+document.addEventListener('DOMContentLoaded', updateButtonState);./frontend/js/include.js
+export async function loadHTML(id, file) {
+    const container = document.getElementById(id);
+    if (!container) return;
+
+    try {
+        const response = await fetch(file);
+        if (!response.ok) {
+            throw new Error(`Failed to load ${file}`);
+        }
+
+        container.innerHTML = await response.text();
+    } catch (error) {
+        console.error(error);
+    }
+}
+./frontend/css/style.css
+:root {
+    --primary-color: #e50914; 
+    --text-main: #ffffff;
+    --text-muted: #b3b3b3;
+    --bg-overlay: rgba(0,0,0,0.5), rgba(0,0,0,0.8);
+    --glass-heavy: rgba(0, 0, 0, 0.90);
+    --glass-medium: rgba(20, 20, 20, 0.75); 
+    --border-color: rgba(255, 255, 255, 0.2);
+    --page-bg: #141414;
+}
+
+body.light-mode {
+    --text-main: #141414;
+    --text-muted: #555555;
+    --bg-overlay: rgba(255,255,255,0.8), rgba(255,255,255,0.95);
+    --glass-heavy: rgba(255, 255, 255, 0.95);
+    --glass-medium: rgba(240, 240, 240, 0.85);
+    --border-color: rgba(0, 0, 0, 0.15);
+    --page-bg: #ffffff;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+body {
+    background-color: #000;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: var(--text-main);
+    margin: 0;
+    overflow-x: hidden;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: var(--glass-heavy); 
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+    color: red;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    max-width: 100%;
+    padding: 15px 40px; 
+}
+
+.nav-items {
+    display: flex;           
+    flex-direction: row;    
+    gap: 30px;               
+    list-style: none;       
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-item a { 
+    color: var(--text-main); 
+    text-decoration: none; 
+    transition: 0.3s;
+    font-weight: 500;
+}
+
+.nav-item a:hover { 
+    color: var(--primary-color); 
+}
+
+.hero-section {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(to bottom, var(--bg-overlay)), 
+                url('https://wallpaperaccess.com/full/329583.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    scroll-snap-align: start;
+}
+
+.hero-text h2 {
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin-bottom: 20px;
+    text-shadow: 0 5px 15px rgba(0,0,0,0.8);
+}
+
+.hero-text p {
+    font-size: 1.5rem;
+    color: var(--text-muted);
+    max-width: 650px;
+    margin-bottom: 30px;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+    margin-left: 120px;
+    font-weight: bold;
+}
+
+.scroll-down-btn {
+    display: inline-block;
+    padding: 10px 30px;
+    background: var(--primary-color);
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 4px;
+    font-size: 1.2rem;
+    margin-top: 20px;
+    transition: background 0.3s;
+}
+
+.scroll-down-btn:hover { background: #b20710; }
+
+#content-section {
+    position: relative;
+    min-height: 100vh;
+    background-color: var(--page-bg);
+    display: grid;
+    grid-template-columns: 300px 1fr; 
+    border-top: 1px solid var(--border-color);
+    scroll-snap-align: start;
+}
+
+.search-and-filter {
+    background-color: var(--glass-medium);
+    border-right: 1px solid var(--border-color);
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    position: sticky;
+    top: 80px; 
+    height: calc(100vh - 80px);
+    overflow-y: auto;
+}
+
+.search-and-filter label { 
+    font-size: 0.85rem; 
+    text-transform: uppercase; 
+    color: var(--text-muted); 
+    font-weight: bold; 
+}
+
+.search-and-filter input[type="text"], .search-and-filter select {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #555;
+    color: var(--text-main);
+    padding: 12px;
+    border-radius: 4px;
+    width: 100%;
+}
+
+input[type=range] { width: 100%; accent-color: var(--primary-color); }
+
+.main-container {
+    padding: 40px;
+}
+
+.list-title h3 { font-size: 1.5rem; margin-bottom: 20px; }
+
+.movie-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+.footer {
+    background: var(--glass-heavy);
+    border-top: 1px solid var(--border-color);
+    padding: 30px;
+    color: #fff;
+    scroll-snap-align: end;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.footer-brand {
+    flex: 1;
+    min-width: 250px;
+}
+
+.footer-brand p:first-child {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+.footer-brand p:last-child {
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+.footer-links {
+    flex: 2;
+    min-width: 300px;
+}
+
+.footer-links table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.footer-links th,
+.footer-links td {
+    text-align: left;
+}
+
+.footer-links th {
+    padding-bottom: 1rem;
+    font-size: 1.1rem;
+    color: var(--accent-color);
+}
+
+.footer-links td {
+    padding: 0.4rem 0;
+    color: #ccc;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.footer-links td:hover {
+    color: #fff;
+    padding-left: 5px;
+}
+
+@media (max-width: 768px) {
+    .footer-container,
+    .footer-links th,
+    .footer-links td {
+        text-align: center;
+    }
+
+    .footer-container {
+        flex-direction: column;
+    }
+}
+
+
+.list-title {
+    font-weight: bold;
+    border-radius: 10%;
+    text-align: center;
+    border: 2px solid var(--primary-color);
+    border-width: 0 0 2px 0;
+    padding: 0.5rem 1rem;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+}
+.movie-list {
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    background-color: var(--page-bg);
+}
+.movie-card {
+    background-color: var(--glass-medium);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}   
+
+@media (max-width: 768px) {
+    #content-section {
+        grid-template-columns: 1fr;
+    }
+    .search-and-filter {
+        position: static;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+    }
+    .hero-text h2 { font-size: 2rem; }
+}
+
+
+
+/* =========================================
+   AUTHENTICATION MODAL STYLES
+   ========================================= */
+
+/* 1. The Dark Overlay (Background) */
+#auth-modal {
+    position: fixed; /* Stays in place when scrolling */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85); /* Dark see-through background */
+    display: none;       /* Centers the box */
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;      /* Sits on top of everything */
+    backdrop-filter: blur(5px); /* Blurs the background movie list */
+    
+    /* Initially hidden? Remove this line if you want to see it immediately for testing */
+    /* display: none; */ 
+}
+
+/* 2. The Login Card (White Box) */
+.auth-wrapper {
+    background-color: #1a1a1a; /* Dark grey card */
+    padding: 40px;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 400px; /* Not too wide */
+    box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+    border: 1px solid #333;
+    text-align: center;
+    position: relative;
+}
+
+/* 3. Titles (Login / Sign Up) */
+.auth-wrapper h3 {
+    margin-bottom: 25px;
+    color: #fff;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+/* 4. Input Fields */
+.auth-wrapper input {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    background-color: #333;
+    border: 1px solid #444;
+    border-radius: 5px;
+    color: white;
+    font-size: 1rem;
+    box-sizing: border-box; /* Ensures padding doesn't break width */
+}
+
+.auth-wrapper input:focus {
+    outline: none;
+    border-color: #e50914; /* Red accent color on click */
+    background-color: #444;
+}
+
+/* 5. The Buttons (Login / Register) */
+.auth-wrapper button {
+    width: 100%;
+    padding: 12px;
+    background-color: #e50914; /* Netflix Red */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-top: 10px;
+}
+
+.auth-wrapper button:hover {
+    background-color: #b20710; /* Darker red on hover */
+}
+
+/* 6. The Toggle Links (Switch between login/signup) */
+.auth-wrapper p {
+    margin-top: 20px;
+    color: #aaa;
+    font-size: 0.9rem;
+}
+
+.auth-wrapper a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+.auth-wrapper a:hover {
+    text-decoration: underline;
+}
+

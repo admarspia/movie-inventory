@@ -5,6 +5,8 @@ import Movie from "./movies.js";
 const movieLoader = new Movie();
 
 
+
+
 function addMovieCard(movie, containerId = "movie-list") {
     const container = document.getElementById(containerId);
     if (!container || !movie) {
@@ -35,11 +37,14 @@ function addMovieCard(movie, containerId = "movie-list") {
     container.appendChild(movieCard);
 
     movieCard.querySelector(".view-details-btn")
-        .addEventListener("click", () => handleViewDetails(movie.imdbID));
+        .addEventListener("click", () => showCardDetails(movie));
 
     movieCard.querySelector(".add-favorite-btn")
         .addEventListener("click", () => addToFav(movie.imdbID));
+    
 }
+
+
 
 function addToFav(id) {
     const movie = movieLoader.getById(id);
@@ -59,32 +64,69 @@ function addToFav(id) {
 }
 
 
-function handleViewDetails(id) {
-    const movie = movieLoader.getById(id);
-    if (movie) showCardDetails(movie);
-}
+
+
+
+
+
 
 function showCardDetails(movie) {
-    const container = document.getElementById("movie-detail-card");
-    if (!container) return;
+    const container = document.querySelector(".movie-detail-card");
+    if (!container  || container.length === 0) {
+        console.log("can't find element movie-detail-card");
+    }else {
 
     container.innerHTML = `
         <div class="detail-card">
 
             <div class="card-poster">
-                <img src="${movie.Poster !== "N/A" ? movie.Poster : "placeholder.jpg"}" alt="${movie.Title}" />
+                <img  src="${movie.Poster !== "N/A" ? movie.Poster : "placeholder.jpg"}" alt="${movie.Title}" />
             </div>
 
-            <div class="card-info">
-                <h4>${movie.Title}</h4>
-                <p>${movie.Year}</p>
-                <p>${movie.Genre}</p>
-                <p>IMDb Rating: ${movie.imdbRating}</p>
-                <p>Awards: ${movie.Awards}</p>
-                <p>Box Office: ${movie.BoxOffice}</p>
-                <p>Language: ${movie.Language}</p>
-                <p>Writer: ${movie.Writer}</p>
+        <div class="card-info" style="display:flex; flex-direction:column; gap:8px; font-size:14px; color:#eaeaea;">
+
+                <h4 style="font-size:18px; margin-bottom:12px; border-bottom:1px solid #444; padding-bottom:6px;">
+                    <span style="display:inline-block; width:120px; color:#aaa; font-weight:500;">Title</span>
+                    <span style="font-weight:600;">${movie.Title}</span>
+                </h4>
+
+                <p>
+                    <span style="display:inline-block; width:120px; color:#aaa;">Year</span>
+                    <span>${movie.Year}</span>
+                </p>
+
+                <p>
+                    <span style="display:inline-block; width:120px; color:#aaa;">Genre</span>
+                    <span>${movie.Genre}</span>
+                </p>
+
+                <p>
+                    <span style="display:inline-block; width:120px; color:#aaa;">IMDb Rating</span>
+                    <span>${movie.imdbRating}</span>
+                </p>
+
+                <p>
+                    <span style="display:inline-block; width:120px; color:#aaa;">Awards</span>
+                    <span>${movie.Awards}</span>
+                </p>
+
+                <p>
+                    <span style="display:inline-block; width:120px; color:#aaa;">Box Office</span>
+                    <span>${movie.BoxOffice}</span>
+                </p>
+
+                <p>
+                    <span style="display:inline-block; width:120px; color:#aaa;">Language</span>
+                    <span>${movie.Language}</span>
+                </p>
+
+                <p>
+                    <span style="display:inline-block; width:120px; color:#aaa;">Writer</span>
+                    <span>${movie.Writer}</span>
+                </p>
+
             </div>
+
 
             <div class="card-actions">
                 <button id="add-favorite-btn">Add to Favorites</button>
@@ -96,7 +138,7 @@ function showCardDetails(movie) {
         </div>
     `;
 
-    container.style.display = "block";
+    container.style.display = "flex";
 
     document.getElementById("close-detail-btn")
         .addEventListener("click", () => container.style.display = "none");
@@ -109,6 +151,7 @@ function showCardDetails(movie) {
             const query = encodeURIComponent(`${movie.Title} official trailer`);
             window.open(`https://www.youtube.com/results?search_query=${query}`, "_blank");
         });
+    }
 }
 
 
@@ -124,14 +167,6 @@ async function initHomePage() {
         "The Godfather",
         "The Dark Knight",
         "Inception",
-        "Forrest Gump",
-        "Interstellar",
-        "Gladiator",
-        "Jurassic Park",
-        "Pulp Fiction",
-        "The Matrix",
-        "Back to the Future",
-        "Fight Club"
     ];
 
     for (const title of selectedMovies) {
