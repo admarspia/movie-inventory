@@ -50,7 +50,6 @@ header {
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border-color);
 }
-
 .header-container {
     display: flex;
     justify-content: space-between; 
@@ -68,13 +67,14 @@ header {
     margin: 0;
     padding: 0;
 }
-
 .nav-item a { 
     color: var(--text-main); 
     text-decoration: none; 
     transition: 0.3s;
     font-weight: 500;
 }
+
+
 
 .nav-item a:hover { 
     color: var(--primary-color); 
