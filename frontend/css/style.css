@@ -178,7 +178,7 @@ header {
     display: inline-flex;
     align-items: center;
     flex-direction: row;
-    padding: 20px;
+    padding: 10px;
     min-width: 130px;
     border-radius: 8px;
     border: none;
@@ -225,7 +225,7 @@ header {
     display: flex;
     flex-direction: column;
     gap: 25px;
-    position: sticky;
+    position: stick;
     top: 80px; 
     height: calc(100vh - 80px);
     overflow-y: auto;

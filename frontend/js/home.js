@@ -130,18 +130,21 @@ function showCardDetails(movie) {
                 <button id="add-favorite-btn">Add to Favorites</button>
                 <button id="watch-trailer-btn">Watch Trailer</button>
                 <button id="close-detail-btn">Close</button>
-                <a href="includes/personalize.html" id="personalize-link">Personalize</a>
+                <button id="personalize-btn">Personalize</button>
             </div>
 
         </div>
     `;
 
-    document.getElementById('personalize-link')
+    document.getElementById('personalize-btn')
         .addEventListener("click", ()=> {
-            let res = ensureLogin();
+            if (!ensureLogin()) return;
+            console.log("true");
+
             const personalizing = JSON.stringify(movie);
         
             localStorage.setItem("personalizing",personalizing);
+            location.href = "incudes/personalize.html";
         })
 
     container.style.display = "flex";
@@ -151,9 +154,8 @@ function showCardDetails(movie) {
 
     document.getElementById("add-favorite-btn")
         .addEventListener("click", () =>  { 
-            ensureLogin();
-            return;
-            addToFav(movie.imdbID);
+            if (!ensureLogin()) return;
+            addToFav(movie);
         });
 
     document.getElementById("watch-trailer-btn")
