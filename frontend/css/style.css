@@ -12,6 +12,7 @@
     --page-bg: #141414;
 }
 
+
 body.light-mode {
     --text-main: #141414;
     --text-muted: #555555;
@@ -23,7 +24,6 @@ body.light-mode {
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-
 html {
     scroll-behavior: smooth;
     height: 100vh;
@@ -50,7 +50,6 @@ header {
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border-color);
 }
-
 .header-container {
     display: flex;
     justify-content: space-between; 
@@ -68,13 +67,14 @@ header {
     margin: 0;
     padding: 0;
 }
-
 .nav-item a { 
     color: var(--text-main); 
     text-decoration: none; 
     transition: 0.3s;
     font-weight: 500;
 }
+
+
 
 .nav-item a:hover { 
     color: var(--primary-color); 
@@ -83,6 +83,7 @@ header {
 /* =========================================
    HERO SECTION
    ========================================= */
+
 .hero-section {
     position: relative;
     width: 100%;
@@ -98,7 +99,6 @@ header {
     text-align: center;
     padding: 20px;
 }
-
 .hero-text h2 {
     font-size: 3.5rem;
     font-weight: 900;
